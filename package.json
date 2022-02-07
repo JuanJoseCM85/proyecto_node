@@ -1,0 +1,23 @@
+{
+  "name": "proyeto_node",
+  "version": "1.0.0",
+  "description": "Semana Node",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JuanJoseCM85/proyecto_node.git"
+  },
+  "author": "Juan José Cabrera Maldonado",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JuanJoseCM85/proyecto_node/issues"
+  },
+  "homepage": "https://github.com/JuanJoseCM85/proyecto_node#readme",
+  "dependencies": {
+    "file-sync": "^0.0.2",
+    "fs": "^0.0.1-security"
+  }
+}
