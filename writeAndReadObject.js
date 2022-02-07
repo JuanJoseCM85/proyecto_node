@@ -12,27 +12,27 @@ function leerEscribirFichero(fichero,persona){
             return;
         }
         //USANDO READFILE
-        // fs.readFile("persona.json",(err,data)=>{
-        //     if(err){
-        //         console.log(err);
-        //         return;
-        //     }
-        //     leido = data.toString();
-        //     console.log("holalaaaaa");
-        //     console.log(leido);
-        //     process.exit();
+        fs.readFile(fichero,(err,data)=>{
+            if(err){
+                console.log(err);
+                return;
+            }
+             leido = data.toString();
+            // console.log("holalaaaaa");
+            console.log(leido);
+            // process.exit();
             
-        // });
+        });
 
         //USANDO READLINE
-        let lector = readline.createInterface({
-            input: fs.createReadStream(fichero)
-        });
+        // let lector = readline.createInterface({
+        //     input: fs.createReadStream(fichero)
+        // });
 
-        lector.on("line", linea =>{
-            console.log("Linea nueva: ", linea);
-            process.exit();
-        });
+        // lector.on("line", linea =>{
+        //     console.log("Linea nueva: ", linea);
+        //     process.exit();
+        // });
     });
 
 }

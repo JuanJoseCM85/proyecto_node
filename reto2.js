@@ -1,6 +1,6 @@
 var fs = require('fs');
 var readline = require('readline');
-
+var rl = readline.createInterface(process.stdin,process.stdout);
 
 let persona = {
     "name": "",
@@ -12,7 +12,6 @@ let persona = {
 
 
 rl.question("¿Cuál es tu nombre?",(respuesta)=>{
-    //console.log(`Hola, ${respuesta}!`);
     persona.name = respuesta;
     rl.question("¿Cual es tu apellido?",(respuesta2)=>{
         persona.surname = respuesta2;
