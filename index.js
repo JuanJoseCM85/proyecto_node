@@ -11,5 +11,3 @@ let persona = {
 leerCon.leerConsola(persona,FICHERO,(fichero2,persona2)=>{
     lEFichero.leerEscribirFichero(fichero2,persona2);
 });
-
-

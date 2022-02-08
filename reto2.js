@@ -25,26 +25,26 @@ rl.question("¿Cuál es tu nombre?",(respuesta)=>{
                     return;
                 }
                 // USANDO READFILE
-                // fs.readFile("persona.json",(err,data)=>{
-                //     if(err){
-                //         console.log(err);
-                //         return;
-                //     }
-                //     leido = data.toString();
-                //     console.log(leido);
-                //     process.exit();
+                fs.readFile("persona.json",(err,data)=>{
+                    if(err){
+                        console.log(err);
+                        return;
+                    }
+                    leido = data.toString();
+                    console.log(leido);
+                    process.exit();
                     
-                // });
+                });
 
                 //USANDO READLINE
-                let lector = readline.createInterface({
-                    input: fs.createReadStream("persona.json")
-                });
+                // let lector = readline.createInterface({
+                //     input: fs.createReadStream("persona.json")
+                // });
 
-                lector.on("line", linea =>{
-                    console.log("Linea nueva: ", linea);
-                    process.exit();
-                });
+                // lector.on("line", linea =>{
+                //     console.log("Linea nueva: ", linea);
+                //     process.exit();
+                // });
             });
 
 
