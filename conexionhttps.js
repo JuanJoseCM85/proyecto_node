@@ -9,7 +9,7 @@ const server = http.createServer(function(request,response){
     console.log("User-agent: "+ request.headers['user-agent']);
     console.log("Response status code " + response.statusCode);
     response.writeHead(200,{'Content-type': 'text/plain'});
-    
+
     let web = request.url;
     if(  web == "/bye"){
         let mensaje = {
@@ -28,6 +28,10 @@ const server = http.createServer(function(request,response){
     }
 
     response.end();
+
+
+
+    
 });
 
 server.listen(3000);
