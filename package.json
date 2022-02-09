@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/JuanJoseCM85/proyecto_node#readme",
   "dependencies": {
+    "express": "^4.17.2",
     "file-sync": "^0.0.2",
     "fs": "^0.0.1-security"
   }
