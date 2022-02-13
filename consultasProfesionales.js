@@ -18,13 +18,13 @@ async function getProfesional(){
         try {
             let data = await fetch (url, param);
             let result = await data.json();
-            console.log(result);
             if (result.error == true){
-                //Aqui tenemos que sacar un toast
-                document.getElementById("response").innerHTML = result.mensjae;
-                document.getElementById("galeria").innerHTML = "";
+
+                document.getElementById("toastMensaje").innerHTML = result.mensjae;
+                var toast3 = new bootstrap.Toast(toastLiveExample)
+                toast3.show();
             }else{
-                let r1 = [result];
+                let r1 = [result.resultado];
                 mostrarProfesionales(r1);
             }
             
@@ -34,7 +34,6 @@ async function getProfesional(){
     }else{
         //En caso de que NO nos pasen el ID
         let url = `http://localhost:3000/profesionales`;
-        console.log("Entraaa");
 
         let param = {
             headers:{
@@ -47,7 +46,7 @@ async function getProfesional(){
             let data = await fetch(url, param);
             let result = await data.json();
             
-            mostrarProfesionales(result);
+            mostrarProfesionales(result.resultado);
 
         } catch (error) {
             console.log(error);
@@ -101,12 +100,18 @@ async function crearProfesional(){
                 let data = await fetch(url, param);
                 let result = await data.json();
 
-                mostrarProfesionales(result);
-                document.getElementById("toastMensaje").innerHTML ="Profesional "+ p1.name + " insertado.";
-                var toast = new bootstrap.Toast(toastLiveExample)
-                toast.show()
-
-                limpiarformulario();
+                if (result.error == false){
+                    mostrarProfesionales(result.resultado);
+                    document.getElementById("toastMensaje").innerHTML ="Profesional "+ p1.name + " insertado.";
+                    var toast = new bootstrap.Toast(toastLiveExample)
+                    toast.show()
+                    limpiarformulario();
+                }else{
+                    document.getElementById("toastMensaje").innerHTML = result.mensaje;
+                    var toast = new bootstrap.Toast(toastLiveExample)
+                    toast.show()
+                }
+                
 
             
             } catch (error) {
@@ -149,11 +154,18 @@ async function actualizarProfesional(){
         let data = await fetch(url, param);
         let result = await data.json();
                             
-        mostrarProfesionales(result);
+        if(result.error == false){
+            mostrarProfesionales(result.resultado);
 
-        document.getElementById("toastMensaje").innerHTML ="Profesional "+document.getElementById("inputID").value + " actualizado.";
-        var toast2 = new bootstrap.Toast(toastLiveExample)
-        toast2.show()
+            document.getElementById("toastMensaje").innerHTML ="Profesional "+document.getElementById("inputID").value + " actualizado.";
+            var toast2 = new bootstrap.Toast(toastLiveExample);
+            toast2.show(); 
+        }else{
+            document.getElementById("toastMensaje").innerHTML = result.mensaje;
+            var toast2 = new bootstrap.Toast(toastLiveExample);
+            toast2.show();
+        }
+        
                             
                                     
     } catch (error) {
@@ -165,8 +177,6 @@ async function actualizarProfesional(){
 async function eliminarProfesional(){
 
     let id = document.getElementById("inputID").value;
-
-    console.log("Entra en eliminar: " + id);
 
     if (id != ""){
         //En caso de que nos pasen el ID
@@ -188,11 +198,18 @@ async function eliminarProfesional(){
             let data = await fetch(url, param);
             let result = await data.json();
             
-            mostrarProfesionales(result);
-            document.getElementById("toastMensaje").innerHTML ="Profesional "+ id + " eliminado.";
-            var toast3 = new bootstrap.Toast(toastLiveExample)
-            toast3.show();
-            limpiarformulario();
+            if(result.error == false){
+                mostrarProfesionales(result.resultado);
+                document.getElementById("toastMensaje").innerHTML ="Profesional "+ id + " eliminado.";
+                var toast3 = new bootstrap.Toast(toastLiveExample)
+                toast3.show();
+                limpiarformulario();
+            }else{
+                document.getElementById("toastMensaje").innerHTML = result.mensaje;
+                var toast3 = new bootstrap.Toast(toastLiveExample)
+                toast3.show();
+            }
+            
             
             
         } catch (error) {
@@ -200,5 +217,8 @@ async function eliminarProfesional(){
         }
     }else{
         //Sacar un toast para indicar que deben introducir un ID PARA ELIMINAR.
+        document.getElementById("toastMensaje").innerHTML ="Por favor, indique el id del Profesional a ELIMINAR";
+            var toast3 = new bootstrap.Toast(toastLiveExample)
+            toast3.show();
     }
 }

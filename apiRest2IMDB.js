@@ -30,7 +30,8 @@ app.get("/profesionales", function(request,response){
 
     if (id != null){
         if(actores != null && id < actores.length){
-            respuesta = actores[id];
+           
+            respuesta = {error: false, codigo:200, mensaje:"No existen los profesionales", resultado: actores[id]};
         }else if( actores == null){
             respuesta = {error: true, codigo:200, mensaje:"No existen los profesionales"};
         }else{
@@ -38,7 +39,8 @@ app.get("/profesionales", function(request,response){
         }    
             
     }else if (actores != null){
-            respuesta = actores;
+           
+            respuesta = {error: false, codigo:200, mensaje:"No existen los profesionales", resultado: actores};
         }else{
             respuesta = {error: true, codigo:200, mensaje:"No existen los profesionales"};
         }
@@ -51,8 +53,6 @@ app.get("/profesionales", function(request,response){
 app.post("/profesionales",function(request,response){
 
     let respuesta;
-    console.log("REQUEST");
-    console.log(request.body);
 
     if (request.body != null){
         actorNuevo = new imdb1.modules.Professional(request.body.name, 
@@ -70,9 +70,9 @@ app.post("/profesionales",function(request,response){
             request.body.foto);
         actores.push(actorNuevo);
 
-        respuesta = actores;
+        respuesta = {error:false, codigo:200,mensaje:"Usuario creado correctamente", resultado: actores};
     }else{
-        respuesta = {error:false, codigo:200,mensaje:"Usuario creado", resultado: actores};
+        respuesta = {error:true, codigo:200,mensaje:"Error al crear el usuario", resultado: actores};
     }
     
     
@@ -83,12 +83,9 @@ app.post("/profesionales",function(request,response){
 
 app.put("/profesionales", function(request,response){
     let respuesta;
-    console.log(request.body);
 
     let id = request.body.id;
-// (name, age, genre, weight, height,
-//     hairColor, eyeColor, race, isRetired,
-//     nationality, oscarsNumber, profession, foto)
+
     if (id < actores.length && actores[id] != null){
         actores[id].name = request.body.name;
         actores[id].age = request.body.age;
@@ -104,7 +101,7 @@ app.put("/profesionales", function(request,response){
         actores[id].profession = request.body.profession;
         actores[id].foto = request.body.foto;
 
-        respuesta = actores;
+        respuesta = {error:false, codigo:200, mensaje:"Usuario Modificado", resultado: actores};
     }else{
         respuesta = {error:true, codigo:200, mensaje:"Usuario no existe", resultado: null};
     }
@@ -115,17 +112,14 @@ app.put("/profesionales", function(request,response){
 app.delete("/profesionales", function(request,response){
     let respuesta;
     let id = request.body.id;
-
-    console.log("Entra en eliminar: "+ id);
-
     if (id < actores.length && actores[id] != null){
         actores.splice(id,1);
-        respuesta = {error:false, codigo:200, mensaje:"Usuario eliminado correctamente",resultado: actores};
+        respuesta = {error:false, codigo:200, mensaje:"Usuario no existe", resultado: actores};
     }else{
         respuesta = {error:true, codigo:200, mensaje:"Usuario no existe", resultado: null};
     }
 
-    response.send(actores);
+    response.send(respuesta);
 });
 
 app.listen(3000);
