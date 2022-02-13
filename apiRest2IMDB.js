@@ -27,17 +27,22 @@ app.get("/profesionales", function(request,response){
     
     let respuesta;
     let id = request.query.id;
+
     if (id != null){
-        if(actores != null && id < actores.length)
-        respuesta = actores[id];
-    else if( actores == null)
+        if(actores != null && id < actores.length){
+            respuesta = actores[id];
+        }else if( actores == null){
             respuesta = {error: true, codigo:200, mensaje:"No existen los profesionales"};
-        else    
-            respuesta = {error: true, codigo:200, mensjae:"El profesional buscado no existe"}
+        }else{
+            respuesta = {error: true, codigo:200, mensjae:"El profesional buscado no existe"};
+        }    
+            
     }else if (actores != null){
             respuesta = actores;
-        }else
+        }else{
             respuesta = {error: true, codigo:200, mensaje:"No existen los profesionales"};
+        }
+            
     
     
     response.send(respuesta);
@@ -46,12 +51,32 @@ app.get("/profesionales", function(request,response){
 app.post("/profesionales",function(request,response){
 
     let respuesta;
+    console.log("REQUEST");
     console.log(request.body);
-    
-    actorNuevo = new imdb1.modules.Professional(request.body.nombre, request.body.edad, request.body.sexo, 78, 180, "rubio", "azules", "blanca", false, "americana", 2, "actor", "./images/bradpit.jpg");
-    actores.push(actorNuevo);
 
-    respuesta = {error:false, codigo:200,mensaje:"Usuario creado", resultado: actores};
+    if (request.body != null){
+        actorNuevo = new imdb1.modules.Professional(request.body.name, 
+            request.body.age, 
+            request.body.genre, 
+            request.body.weight, 
+            request.body.height,
+            request.body.hairColor,
+            request.body.eyeColor,
+            request.body.race,
+            request.body.isRetired,
+            request.body.nationality,
+            request.body.oscarsNumber,
+            request.body.profession,
+            request.body.foto);
+        actores.push(actorNuevo);
+
+        respuesta = actores;
+    }else{
+        respuesta = {error:false, codigo:200,mensaje:"Usuario creado", resultado: actores};
+    }
+    
+    
+
     
     response.send(respuesta);
 });
@@ -61,12 +86,25 @@ app.put("/profesionales", function(request,response){
     console.log(request.body);
 
     let id = request.body.id;
-
+// (name, age, genre, weight, height,
+//     hairColor, eyeColor, race, isRetired,
+//     nationality, oscarsNumber, profession, foto)
     if (id < actores.length && actores[id] != null){
-        actores[id].name = request.body.nombre;
-        actores[id].age = request.body.edad;
-        actores[id].genre = request.body.sexo;
-        respuesta = {error:false, codigo:200, mensaje:"Usuario modificado correctamente",resultado: actores[id]};
+        actores[id].name = request.body.name;
+        actores[id].age = request.body.age;
+        actores[id].genre = request.body.genre;
+        actores[id].weight = request.body.weight;
+        actores[id].height = request.body.height;
+        actores[id].hairColor = request.body.hairColor;
+        actores[id].eyeColor = request.body.eyeColor;
+        actores[id].race = request.body.race;
+        actores[id].isRetired = request.body.isRetired;
+        actores[id].nationality = request.body.nationality;
+        actores[id].oscarsNumber = request.body.oscarsNumber;
+        actores[id].profession = request.body.profession;
+        actores[id].foto = request.body.foto;
+
+        respuesta = actores;
     }else{
         respuesta = {error:true, codigo:200, mensaje:"Usuario no existe", resultado: null};
     }
@@ -78,6 +116,8 @@ app.delete("/profesionales", function(request,response){
     let respuesta;
     let id = request.body.id;
 
+    console.log("Entra en eliminar: "+ id);
+
     if (id < actores.length && actores[id] != null){
         actores.splice(id,1);
         respuesta = {error:false, codigo:200, mensaje:"Usuario eliminado correctamente",resultado: actores};
@@ -85,7 +125,7 @@ app.delete("/profesionales", function(request,response){
         respuesta = {error:true, codigo:200, mensaje:"Usuario no existe", resultado: null};
     }
 
-    response.send(respuesta);
+    response.send(actores);
 });
 
 app.listen(3000);

@@ -1,0 +1,17 @@
+* {
+  border: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+.card img {
+  width: 150px;
+}
+
+.card-body p {
+  margin-bottom: 0rem;
+}
+
+.accordion-body {
+  background-color: #77889940;
+}
